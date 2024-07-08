@@ -1,0 +1,111 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 13.3px;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+svg {
+    width: 175px;
+    height: 40px;
+}
+
+.banner {
+    min-width: 100%;
+    height: 60px;
+    padding: 15px 10% 20px 10%;
+    background-color: #fff;
+}
+
+button {
+    background: #0099df;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+    outline: 0;
+    width: 105px;
+    height: 44px;
+    line-height: normal;
+    text-align: center;
+    font-size: 16px;
+    display: table
+}
+
+form {
+    padding-top: 3%;
+    margin: 0 auto;
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    align-items: center;
+}
+
+form .input {
+    background-color: red;
+}
+
+.form-field {
+    width: 275px;
+    height: 35px;
+    position: relative;
+    background: white;
+    border-radius: 0px;
+    border: 0.5px solid #CCCCCC;
+    padding: 0 10px;
+}
+
+.regular-field {
+    width: 100%;
+    margin-right: 15px;
+}
+
+.form-field.regular-field:first-of-type {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.two-column {
+    display: flex;
+    width: 100%;
+}
+
+.min-field {
+    width: 50%;
+}
+
+.two-column .min-field:last-of-type {
+    border-bottom-right-radius: 8px;
+}
+
+.two-column .min-field:first-of-type {
+    border-bottom-left-radius: 8px;
+}
+
+.form-field-group .min-field:last-of-type {
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+
+.form-field:hover {
+    border-color: black;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.form-field.error {
+    border-color: red;
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+}

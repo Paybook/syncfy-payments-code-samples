@@ -1,0 +1,41 @@
+{
+  "name": "capture-sdk-demo",
+  "description": "SDK Demo",
+  "version": "1.0.0",
+  "author": "",
+  "homepage": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "22.1.0",
+    "npm": "10.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "ft",
+    "capture",
+    "sdk",
+    "demo",
+    "syncfy"
+  ],
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "axios": "^1.5.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "exphbs": "^1.2.0",
+    "express": "^4.18.3",
+    "express-handlebars": "^7.1.2",
+    "helmet": "^7.0.0",
+    "highlight.js": "^11.9.0",
+    "http": "0.0.0"
+  }
+}

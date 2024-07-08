@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/syncfy.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+</head>
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script type="text/javascript" src="https://cdn.firstoken.co/captures/js/2.0/sdk.js"></script>
+
+<form id="collect-form" method="post">
+    <div class="form-field-group ">
+        <div id="cc-holder" class="form-field regular-field"></div>
+        <div id="cc-number" class="form-field regular-field"></div>
+        <div class="two-column">
+            <div id="cc-expiration-date" class="form-field min-field"></div>
+            <div id="cc-cvv" class="form-field min-field"></div>
+        </div>
+    </div>
+    <button type="submit" class="form-button"> Continuar</button>
+    <input type="hidden" name="result" id="input-result">
+</form>
+<div id="token-result"></div>
+
+<script>
+    const cardNumberInput = document.getElementById("cc-number");
+    const cardExpDateInput = document.getElementById("cc-expiration-date");
+    const cardHolderInput = document.getElementById("cc-holder");
+    const cardCVVInput = document.getElementById("cc-cvv");
+    const FT = window.FTCaptures.init("{{key}}", "{{env}}", function (state) { });
+    const css = {
+        "color": "#000",
+        "::placeholder": {
+            "color": "#e3e3e3"
+        }
+    }
+    FT.field("#cc-number", {
+        type: "card-number",
+        name: "card_number",
+        placeholder: "XXXX-XXXX-XXXX-XXXX",
+        autocomplete: "cc-number",
+        required: "true",
+        css: css,
+    });
+    FT.field("#cc-holder", {
+        type: "card-holder",
+        name: "card_holder",
+        placeholder: "Name",
+        autocomplete: "cc-name",
+        errorColor: "750000",
+        successColor: "038846e1",
+        required: "true",
+        css: css
+    });
+
+    FT.field("#cc-expiration-date", {
+        type: "card-expiration-date",
+        name: "card_expiration_date",
+        placeholder: "MM/YY",
+        autocomplete: "cc-exp",
+        errorColor: "750000",
+        successColor: "038846e1",
+        yearLength: "2",
+        required: "true",
+        css: css
+    });
+
+    FT.field("#cc-cvv", {
+        type:
+                "card-security-code",
+        name: "card_security_code",
+        placeholder: "CVV",
+        autocomplete: "cc-csc",
+        required: "true",
+        css: css,
+    });
+
+    FTCaptures.on("cardHolderValidationFailed", function (event) {
+        console.log(event.data.isValid)
+    });
+    FTCaptures.on("cardNumberValidationFailed", function (event) {
+        console.log(event.data.isValid)
+    });
+    FTCaptures.on("cardExpirationDateValidationFailed", function (event) {
+        console.log(event.data.isValid)
+    });
+    FTCaptures.on("cardSecurityCodeValidationFailed", function (event) {
+        console.log(event.data.isValid)
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('#collect-form');
+        const Inputresult = document.querySelector('#input-result');
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            try {
+                const validationResults = await FTCaptures.validate("{{key}}");
+                console.log(validationResults)
+                if (!validationResults.hasErrors) {
+                    const tokenizationResult = await FTCaptures.tokenize("{{key}}");
+                    Inputresult.value = tokenizationResult.card_number;
+                    console.log(JSON.stringify(tokenizationResult));
+                    const tokenResultDiv = document.getElementById('token-result');
+                    const formattedResult = JSON.stringify(tokenizationResult, null, 2);
+                    tokenResultDiv.innerHTML = `<pre><code class="json">${formattedResult}</code></pre>`;
+                    hljs.highlightElement(tokenResultDiv.querySelector('code'));
+                }
+                else {
+                    const errorElement = document.querySelector('#error-forms');
+                    const fieldsValidate = validationResults.fields
+                    cardNumberInput.classList.remove("error");
+                    cardCVVInput.classList.remove("error");
+                    cardExpDateInput.classList.remove("error");
+                    cardHolderInput.classList.remove("error");
+
+                    const invalidFields = Object.keys(fieldsValidate).filter(key => !fieldsValidate[key].isvalid);
+                    console.log(invalidFields);
+                    if (invalidFields.length > 0) {
+                        invalidFields.forEach(key => {
+                            if (key === 'card_security_code') {
+                                cardCVVInput.classList.add("error");
+                            }
+                            else if (key === 'card_holder') {
+                                cardHolderInput.classList.add("error");
+                            }
+                            else if (key === 'card_expiration_date') {
+                                cardExpDateInput.classList.add("error");
+                            }
+                            else if (key === 'card_number') {
+                                cardNumberInput.classList.add("error");
+                            }
+                        });
+                    }
+                    else {
+                        cardNumberInput.classList.remove("error");
+                        cardCVVInput.classList.remove("error");
+                        cardExpDateInput.classList.remove("error");
+                        cardHolderInput.classList.remove("error");
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+        });
+    });
+</script>
+</body>
+
+</html>
