@@ -23,6 +23,11 @@ Asegúrate de configurar las variables de entorno en el archivo `.env` antes de 
 ## Uso
 
 Para iniciar la aplicación en modo desarrollo:
-```bash
-node server.js
-```
+   ```bash
+   node server.js
+   ```
+Acceder a la siguiente url
+
+   ```
+   http://localhost:3000/sdk
+   ```
