@@ -35,3 +35,6 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 .idea
+.env
+card-tokenization/nodejs/node_modules/*
+card-tokenization/nodejs/package-lock.json

@@ -22,10 +22,10 @@ app.use(express.static("./app/public", {
 
 app.use(helmet.contentSecurityPolicy({
     directives: {
-        defaultSrc: ["'self'", "https://api.firstoken-staging.co", "https://api.firstoken.co", "https://cdn.firstoken.co", "https://cdnjs.cloudflare.com"],
+        defaultSrc: ["'self'", "https://api.firstoken-staging.co", "https://api.firstoken.co", "https://cdn.firstoken.co", "https://cdnjs.cloudflare.com","https://cdn-tokenize.syncfy.com"],
         frameSrc: ["'self'", "*"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://captures.firstoken-staging.co", "https://captures.firstoken.co", "https://cdn.firstoken.co", "https://cdnjs.cloudflare.com"],
-        frameAncestors: ["'self'", "https://captures.firstoken-staging.co", "https://captures.firstoken.co"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://captures.firstoken-staging.co", "https://captures.firstoken.co", "https://cdn.firstoken.co", "https://cdnjs.cloudflare.com","https://cdn-tokenize.syncfy.com"],
+        frameAncestors: ["'self'", "https://captures.firstoken-staging.co", "https://captures.firstoken.co","https://cdn-tokenize.syncfy.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"]
     },
 }));
